@@ -55,11 +55,11 @@ services:
       - inception
     restart: unless-stopped
     env_file: .env
-    health_check:
+    healthcheck:
       test: 'curl -kfsSL https://localhost:443/status'
       interval: 5s
       timeout: 1s
-      retires: 10
+      retries: 10
       start_period: 5s
 
 volumes:
