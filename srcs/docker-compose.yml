@@ -32,6 +32,8 @@ services:
       - wordpress:/var/www/html/wordpress
     expose:
       - "9000"
+    ports:
+      - "8000:80"
     networks:
       - inception
     restart: unless-stopped
