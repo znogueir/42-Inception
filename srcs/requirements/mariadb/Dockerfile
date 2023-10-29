@@ -1,23 +1,32 @@
 FROM debian:bullseye
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y mariadb-server
-RUN apt-get install -y mariadb-client
-RUN apt-get install -y procps
+RUN	apt-get update -y && \
+	apt-get upgrade -y && \
+	apt-get install -y mariadb-server && \
+	apt-get install -y mariadb-client && \
+	apt-get install -y vim && \
+	apt-get clean
+	#apt-get install -y procps
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+ENV SQL_DATABASE=db_inception
+ENV SQL_USER=db_user
+ENV SQL_PASSWORD=db_password
+ENV SQL_ROOT_PASSWORD=db_root_password
+ENV SQL_HOST=mariadb:3306
 
-RUN mkdir -p /var/run/mysqld
-RUN mkdir -p /var/lib/mysql
-RUN chown mysql:mysql /var/run/mysqld/
-RUN chmod -R 755 /var/run/mysqld/
-RUN chown mysql:mysql /var/lib/mysql/
-RUN chmod -R 755 /var/lib/mysql/
+COPY	./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+
+RUN	mkdir -p /var/run/mysqld && \
+	mkdir -p /var/lib/mysql && \
+	chown mysql:mysql /var/run/mysqld/ && \
+	chown mysql:mysql /var/lib/mysql/ && \
+	chmod -R 755 /var/run/mysqld/ && \
+	chmod -R 755 /var/lib/mysql/
 
 EXPOSE 3306
 
-COPY ./tools/dbscript.sh ./dbscript.sh
-RUN chmod +x ./dbscript.sh
+RUN mkdir -p /etc/mariadb/startup_script/
+COPY ./tools/mariadb-script.sh /etc/mariadb/startup_script/mariadb-script.sh
+RUN chmod -R 755 /etc/mariadb/startup_script/mariadb-script.sh
 
-ENTRYPOINT ["bash", "./dbscript.sh"]
+ENTRYPOINT ["bash", "/etc/mariadb/startup_script/mariadb-script.sh"]

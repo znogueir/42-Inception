@@ -1,23 +1,19 @@
-all:
-	mkdir -p /home/znogueir/data/mariadb
-	mkdir -p /home/znogueir/data/wordpress
-	docker compose -f ./srcs/docker-compose.yml build
-	docker compose -f ./srcs/docker-compose.yml up -d
+DOCK_COMP_PATH=./srcs
 
-log:
-	docker logs wordpress
-	docker logs mariadb
-	docker logs nginx
+all: build up
 
-clean:
-	docker container stop nginx mariadb wordpress
-	docker network rm inception
+build:
+	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml build
 
-fclean: clean
-	@sudo rm -rf /home/znogueir/data/mariadb
-	@sudo rm -rf /home/znogueir/data/wordpress
-	@docker system prune -af
+up:
+	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml up -d
 
-re: fclean all
+down:
+	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml down
 
-.Phony: all logs clean fclean
+logs:
+	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml logs
+
+re: down all
+
+.PHONY: all re build up down
