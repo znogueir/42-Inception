@@ -8,11 +8,11 @@ RUN	apt-get update -y && \
 	apt-get clean
 	#apt-get install -y procps
 
-ENV SQL_DATABASE=db_inception
-ENV SQL_USER=db_user
-ENV SQL_PASSWORD=db_password
-ENV SQL_ROOT_PASSWORD=db_root_password
-ENV SQL_HOST=mariadb:3306
+#ENV SQL_DATABASE=db_inception
+#ENV SQL_USER=db_user
+#ENV SQL_PASSWORD=db_password
+#ENV SQL_ROOT_PASSWORD=db_root_password
+#ENV SQL_HOST=mariadb:3306
 
 COPY	./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
