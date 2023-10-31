@@ -28,6 +28,9 @@ RUN	chown -R root:root /var/www/wordpress && \
 	chown -R www-data:www-data /var/www/* && \
 	chmod -R 755 /var/www/*
 
+#RUN	mkdir -p /var/run/mysqld/ && \
+#	chmod +
+
 EXPOSE	9000
 
 RUN	mkdir -p /etc/wordpress/startup_script/
@@ -41,9 +44,9 @@ RUN	echo "clear_env=no" >> /etc/php/7.4/fpm/php.ini && \
 
 #RUN	echo "mysql.default_socket=/var/run/mysqld/mysqld.sock" >> /etc/php/7.4/php.ini
 
-RUN	sed -i '/;mysql.default_socket/c\mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
+#RUN	sed -i '/;mysql.default_socket/c\mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
 #RUN	sed -i 's/;mysqld.default_socket/mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock/g' /etc/php/7.4/fpm/php.ini
-RUN	sed -i '/mysqli.default_socket/c\mysqli.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
-RUN	sed -i '/pdo_mysql.default_socket/c\pdo_mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
+#RUN	sed -i '/mysqli.default_socket/c\mysqli.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
+#RUN	sed -i '/pdo_mysql.default_socket/c\pdo_mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
 
-ENTRYPOINT ["bash", "/etc/wordpress/startup_script/wpscript.sh"]
+CMD ["bash", "/etc/wordpress/startup_script/wpscript.sh"]

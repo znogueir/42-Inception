@@ -4,7 +4,7 @@
 mysqld_safe &
 pid="$!"
 
-# Wait for MariaDB to start
+#Wait for MariaDB to start
 #sleep 5
 
 # Use the mysqladmin utility to wait for server to finish starting
