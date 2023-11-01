@@ -36,6 +36,12 @@ services:
       - inception
     restart: unless-stopped
     env_file: .env
+    healthcheck:
+      test: bash /etc/wordpress/startup_script/wcscript.sh | grep FINISHED
+      interval: 5s
+      timeout: 1s
+      retries: 20
+      start_period: 5s
     depends_on:
       mariadb:
         condition: service_healthy

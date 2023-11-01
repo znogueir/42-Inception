@@ -11,8 +11,8 @@ up:
 	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml up -d
 
 down:
-	rm -rf /home/znogueir/data/mariadb/*
-	rm -rf /home/znogueir/data/wordpress/*
+	sudo rm -rf /home/znogueir/data/mariadb/*
+	sudo rm -rf /home/znogueir/data/wordpress/* 
 	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml down
 
 logs:
