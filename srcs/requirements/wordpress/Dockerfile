@@ -3,7 +3,7 @@ FROM debian:bullseye
 RUN	apt-get update -y && \
 	apt-get upgrade -y && \
 	apt-get install -y wget && \
-	apt-get install -y	php7.3 \
+	apt-get install -y	php \
 				php-fpm \
 				php-mysql \
 				mariadb-client
@@ -20,16 +20,13 @@ RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 	chmod +x wp-cli.phar && \
 	mv wp-cli.phar /usr/local/bin/wp
 
-RUN	wget https://fr.wordpress.org/wordpress-6.3.2-fr_FR.tar.gz -P /var/www && \
-	cd /var/www && tar -xzf wordpress-6.3.2-fr_FR.tar.gz && \
+RUN	wget https://fr.wordpress.org/wordpress-6.3.2-fr_FR.tar.gz -P /var/www/html/ && \
+	cd /var/www/html && tar -xzf wordpress-6.3.2-fr_FR.tar.gz && \
 	rm wordpress-6.3.2-fr_FR.tar.gz
 
-RUN	chown -R root:root /var/www/wordpress && \
+RUN	chown -R root:root /var/www/html/wordpress && \
 	chown -R www-data:www-data /var/www/* && \
 	chmod -R 755 /var/www/*
-
-#RUN	mkdir -p /var/run/mysqld/ && \
-#	chmod +
 
 EXPOSE	9000
 
@@ -37,16 +34,10 @@ RUN	mkdir -p /etc/wordpress/startup_script/
 COPY	./tools/wpscript.sh /etc/wordpress/startup_script/wpscript.sh
 RUN	chmod +x /etc/wordpress/startup_script/wpscript.sh
 
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
 RUN	echo "clear_env=no" >> /etc/php/7.4/fpm/php.ini && \
 	echo "listen=wordpress:9000" >> /etc/php/7.4/fpm/php.ini
-
-#RUN	echo "mysqld.default_socket=/var/run/mysqld/mysqld.sock" >> /etc/php/7.4/php.ini
-
-#RUN	echo "mysql.default_socket=/var/run/mysqld/mysqld.sock" >> /etc/php/7.4/php.ini
-
-#RUN	sed -i '/;mysql.default_socket/c\mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
-#RUN	sed -i 's/;mysqld.default_socket/mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock/g' /etc/php/7.4/fpm/php.ini
-#RUN	sed -i '/mysqli.default_socket/c\mysqli.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
-#RUN	sed -i '/pdo_mysql.default_socket/c\pdo_mysql.default_socket=\/var\/run\/mysqld\/mysqld.sock' /etc/php/7.4/fpm/php.ini
 
 CMD ["bash", "/etc/wordpress/startup_script/wpscript.sh"]

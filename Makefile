@@ -3,12 +3,16 @@ DOCK_COMP_PATH=./srcs
 all: build up
 
 build:
+	mkdir -p /home/znogueir/data/mariadb
+	mkdir -p /home/znogueir/data/wordpress
 	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml build
 
 up:
 	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml up -d
 
 down:
+	rm -rf /home/znogueir/data/mariadb/*
+	rm -rf /home/znogueir/data/wordpress/*
 	docker compose -f $(DOCK_COMP_PATH)/docker-compose.yml down
 
 logs:
