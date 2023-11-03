@@ -74,5 +74,16 @@ fi
 
 echo -e "\e[38;5;34m############### FINISHED ###############\e[0m"
 
+cd /var/www/html/wordpress/
+chmod 777 -R wp-content
+chmod 777 -R wp-config.php
+chmod 777 -R wp-includes
+
+chown -R www-data:www-data wp-includes
+chown -R www-data:www-data wp-content
+
+mkdir -p /var/www/html/wordpress/static/
+cp -r /etc/static/ /var/www/html/wordpress/
+
 echo -e "\e[1m=============== EXEC PHP ==============\e[0m"
 exec /usr/sbin/php-fpm7.4 -F -R

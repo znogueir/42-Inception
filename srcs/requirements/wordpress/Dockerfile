@@ -28,14 +28,14 @@ RUN	chown -R root:root /var/www/html/wordpress && \
 	chown -R www-data:www-data /var/www/* && \
 	chmod -R 755 /var/www/*
 
-EXPOSE	9000
-
 RUN	mkdir -p /etc/wordpress/startup_script/
 COPY	./tools/wpscript.sh /etc/wordpress/startup_script/wpscript.sh
 RUN	chmod +x /etc/wordpress/startup_script/wpscript.sh
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY	./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY	./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+COPY	./static/ /etc/static/
 
 RUN	echo "clear_env=no" >> /etc/php/7.4/fpm/php.ini && \
 	echo "listen=wordpress:9000" >> /etc/php/7.4/fpm/php.ini
