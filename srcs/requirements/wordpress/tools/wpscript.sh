@@ -81,6 +81,7 @@ chmod 777 -R wp-includes
 
 chown -R www-data:www-data wp-includes
 chown -R www-data:www-data wp-content
+chown -R www-data:www-data wp-admin
 
 mkdir -p /var/www/html/wordpress/static/
 cp -r /etc/static/ /var/www/html/wordpress/

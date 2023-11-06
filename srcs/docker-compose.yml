@@ -48,12 +48,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress-data:/var/www/html/wordpress/
-    ports:
-      - "443:443"
-    #volumes:
       #- ./nginx:/etc/nginx/conf.d
       #- ./static:/var/www/static
-      #- wordpress_data:/var/www/wordpress
+    ports:
+      - "443:443"
     networks:
       - inception
     restart: unless-stopped
@@ -65,15 +63,15 @@ networks:
     driver: bridge
 
 volumes:
-  mariadb-data:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/znogueir/data/mariadb'
   wordpress-data:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       device: '/home/znogueir/data/wordpress'
+  mariadb-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/znogueir/data/mariadb'
