@@ -4,8 +4,13 @@ RUN	apt-get update -y && \
 	apt-get upgrade -y && \
 	apt-get install -y wget \
 	php \
+	php-gd \
+	php-xml \
+	php-cgi \
 	php-fpm \
 	php-mysql \
+	php-common \
+	php-mbstring \
 	mariadb-client && \
 	apt-get clean
 
@@ -33,7 +38,7 @@ RUN	chown -R root:root /var/www/html/wordpress && \
 
 # copying startup script to setup wordpress and giving perms
 RUN		mkdir -p /etc/wordpress/startup_script/
-COPY	./tools/wpscript.sh /etc/wordpress/startup_script/wpscript.sh
+COPY		./tools/wpscript.sh /etc/wordpress/startup_script/wpscript.sh
 RUN		chmod +x /etc/wordpress/startup_script/wpscript.sh
 
 # copying conf file for php-fpm
@@ -45,8 +50,8 @@ RUN	echo "clear_env=no" >> /etc/php/7.4/fpm/php.ini && \
 	echo "listen=wordpress:9000" >> /etc/php/7.4/fpm/php.ini
 
 # copying static website
-RUN		mkdir -p /var/www/html/wordpress/static/
-COPY	./static/* /var/www/html/wordpress/static/
+# RUN	mkdir -p /var/www/html/wordpress/static/css_styles/
+COPY	./static/ /etc/static/
 
 EXPOSE 9000
 

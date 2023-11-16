@@ -39,7 +39,7 @@ echo -e "\e[1m============= CORE INSTALL =============\e[0m"
 	wp core install --allow-root \
 		--url=https://${DOMAIN_NAME} \
 		--title=${SITE_TITLE} \
-		--admin_user=${ADMIN_USER} \
+		--admin_user=${ADMIN_LOGIN} \
 		--admin_password=${ADMIN_PASSWORD} \
 		--admin_email=${ADMIN_EMAIL};
 
@@ -62,8 +62,11 @@ echo -e "\e[1m======== DELETE USELESS PLUGINS ========\e[0m"
 	wp theme delete twentytwenty twentynineteen --allow-root
 	wp plugin delete hello --allow-root
 
-echo -e "\e[1m=========== REWRITE STRUCT =============\e[0m"
-	wp rewrite structure '/%postname%/' --allow-root
+echo -e "\e[1m======== INSTALL CLASSIC EDITOR ========\e[0m"
+	wp plugin install classic-editor --allow-root --activate
+
+# echo -e "\e[1m=========== REWRITE STRUCT =============\e[0m"
+#	wp rewrite structure '/%postname%/' --allow-root
 fi
 
 echo -e "\e[1m======== CHECKING FOR /run/php/ ========\e[0m"
@@ -78,13 +81,16 @@ cd /var/www/html/wordpress/
 chmod 777 -R wp-content
 chmod 777 -R wp-config.php
 chmod 777 -R wp-includes
+chmod 777 -R wp-admin
 
 chown -R www-data:www-data wp-includes
 chown -R www-data:www-data wp-content
 chown -R www-data:www-data wp-admin
+chown -R www-data:www-data wp-config.php
+chown -R www-data:www-data static/*
 
 mkdir -p /var/www/html/wordpress/static/
 cp -r /etc/static/ /var/www/html/wordpress/
 
 echo -e "\e[1m=============== EXEC PHP ==============\e[0m"
-exec /usr/sbin/php-fpm7.4 -F -R
+exec /usr/sbin/php-fpm7.4 -F

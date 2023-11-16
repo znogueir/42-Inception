@@ -14,7 +14,8 @@ services:
     networks:
       - inception
     restart: unless-stopped
-    env_file: .env
+    env_file: 
+      - .env
     healthcheck:
       test: mysqladmin ping --host=localhost -p${SQL_ROOT_PASSWORD}
       interval: 5s
@@ -35,7 +36,8 @@ services:
     networks:
       - inception
     restart: unless-stopped
-    env_file: .env
+    env_file: 
+      - .env
     depends_on:
       mariadb:
         condition: service_healthy
@@ -55,11 +57,22 @@ services:
     networks:
       - inception
     restart: unless-stopped
+    environment:
+      - DOMAIN_NAME=znogueir.42.fr
+      - CERTS=/etc/nginx/ssl/inception.crt
+      - CERTS=/etc/nginx/ssl/inception.key
     depends_on:
       - wordpress
+    healthcheck:
+      test: ["CMD", "curl", "kfsSL", "https://localhost:443"]
+      interval: 5s
+      timeout: 1s
+      retries: 20
+      start_period: 5s
 
 networks:
   inception:
+    name: inception
     driver: bridge
 
 volumes:

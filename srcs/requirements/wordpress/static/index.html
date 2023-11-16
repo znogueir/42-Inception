@@ -4,21 +4,157 @@
 		<meta charset="utf-8">
 		<title>Inception</title>
 		<link rel="stylesheet" href="./css_styles/index_style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;\
+300;400;700;900&family=Roboto:wght@100;400;700;900&display=swap" rel="stylesheet">
 		<!-- <link rel="icon" type="image/png" href="image_name.png"> -->
 	</head>
 	<body>
 		<header>
-			<div class="first">
-				<div class="second">
-					<h3>Inception</h3>
-					<p>super.</p>
+			<!-- <div class="background">test</div> -->
+			<div class="top">
+				<div class="sheet" id="top_section">
+					<div class="text_block" id="profile">
+						<h3>Zachary Nogueira</h3>
+						<p>blabla</p>
+					</div>
 				</div>
-				<div class="second">
-					<h2>lets go</h2>
+				<button id="dark-mode-toggle">
+					🌚
+				</button>
+			</div>
+			<div id="bottom_section">
+				<div class="decoration" id="left_deco">
+					<div class="deco_item" id="n1">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n2">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n3">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n4">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n5">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n6">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n7">
+						<!-- item -->
+					</div>
+				</div>
+				<div class="sheet" id="left_section">
+					<div class="text_block" id="pro_exp">
+						<h3>Employment History</h3>
+						<p>blabla</p>
+					</div>
+					<div class="text_block" id="education">
+						<h3>Education</h3>
+						<p>blabla</p>
+					</div>
+					<div class="text_block" id="certifs">
+						<h3>Courses & Certifications</h3>
+						<p>blabla</p>
+					</div>
+					<div class="text_block" id="refs">
+						<h3>References</h3>
+						<p>blabla</p>
+					</div>
+					<div class="text_block" id="info">
+						<h3>Info</h3>
+						<p>blabla</p>
+					</div>
+				</div>
+				<div class="sheet" id="right_section">
+					<div class="text_block" id="details">
+						<h3>Details</h3>
+						<p>
+							+33 7 99 99 99 99<br>
+							zachary.nogueira@gmail.com<br>
+							Address: 00 rue Machin, 75004, Paris, France<br>
+							French, M, 23<br>
+						</p>
+					</div>
+					<div class="text_block" id="skills">
+						<h3>Skills</h3>
+						<p>
+							<strong>&#183;</strong> blabla<br>
+							<strong>&#183;</strong> blabla<br>
+							<strong>&#183;</strong> blabla<br>
+							<strong>&#183;</strong> blabla<br>
+							<strong>&#183;</strong> blabla<br>
+						</p>
+					</div>
+					<div class="text_block" id="languages">
+						<h3>Languages</h3>
+						<p>
+							<strong>&#183; French :</strong> Native speaker<br>
+							<strong>&#183; English :</strong> Highly proficient<br>
+						</p>
+					</div>
+					<div class="text_block" id="hobbies">
+						<h3>Hobbies</h3>
+						<p>
+							<strong>&#183;</strong> Climbing<br>
+							<strong>&#183;</strong> Coding<br>
+							<strong>&#183;</strong> idk<br>
+						</p>
+					</div>
+					<div class="text_block" id="links">
+						<h3>Links</h3>
+						<p>
+							<strong>&#183; Github :</strong> blabla<br>
+							<strong>&#183; LinkedIn :</strong> blabla<br>
+							<strong>&#183; Website:</strong> blabla<br>
+						</p>
+					</div>
+				</div>
+				<div class="decoration" id="right_deco">
+					<div class="deco_item" id="n11">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n12">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n13">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n14">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n15">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n16">
+						<!-- item -->
+					</div>
+					<div class="deco_item" id="n17">
+						<!-- item -->
+					</div>
 				</div>
 			</div>
 		</header>
 		<footer>
 		</footer>
+		<script>
+			var icon = document.getElementById("dark-mode-toggle");
+
+			icon.onclick = function() {
+				document.body.classList.toggle("dark-theme");
+
+				var isDarkMode = document.body.classList.contains("dark-theme");
+
+				if (isDarkMode) {
+					icon.innerText = "🌝";
+				} else {
+					icon.innerText = "🌚";
+				}
+			}
+		</script>
 	</body>
 </html>

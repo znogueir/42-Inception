@@ -9,3 +9,5 @@ socket			= /var/run/mysqld/mysqld.sock
 skip_networking		= off
 max_allowed_packet	= 64M
 log_error		= /var/log/mysql/error.log
+character-set-server	= utf8mb4
+collation-server	= utf8mb4_general_ci
