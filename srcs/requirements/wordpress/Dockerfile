@@ -4,13 +4,8 @@ RUN	apt-get update -y && \
 	apt-get upgrade -y && \
 	apt-get install -y wget \
 	php \
-	php-gd \
-	php-xml \
-	php-cgi \
 	php-fpm \
 	php-mysql \
-	php-common \
-	php-mbstring \
 	mariadb-client && \
 	apt-get clean
 

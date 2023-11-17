@@ -50,17 +50,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress-data:/var/www/html/wordpress/
-      #- ./nginx:/etc/nginx/conf.d
-      #- ./static:/var/www/static
     ports:
       - "443:443"
     networks:
       - inception
     restart: unless-stopped
-    environment:
-      - DOMAIN_NAME=znogueir.42.fr
-      - CERTS=/etc/nginx/ssl/inception.crt
-      - CERTS=/etc/nginx/ssl/inception.key
     depends_on:
       - wordpress
     healthcheck:
@@ -69,6 +63,50 @@ services:
       timeout: 1s
       retries: 20
       start_period: 5s
+
+# ======================== BONUSES ========================= #
+# Adminer
+#  adminer:
+#    image: adminer
+#    container_name: adminer
+#    build:
+#      context: bonus/adminer/
+#      dockerfile: Dockerfile
+#    volumes:
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - inception
+#    restart: unless-stopped
+
+# FTP Server  
+#  adminer:
+#    image: adminer
+#    container_name: adminer
+#    build:
+#      context: bonus/adminer/
+#      dockerfile: Dockerfile
+#    volumes:
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - inception
+#    restart: unless-stopped
+
+# Additional service : Portainer
+#  portainer:
+#    image: portainer
+#    container_name: portainer
+#    build:
+#      context: bonus/portainer/
+#      dockerfile: Dockerfile
+#    ports:
+#      - "9000:9001"
+#    networks:
+#      - inception
+#    restart: unless-stopped
+
+# ========================================================== #
 
 networks:
   inception:
