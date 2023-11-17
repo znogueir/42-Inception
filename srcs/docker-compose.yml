@@ -70,7 +70,7 @@ services:
 #    image: adminer
 #    container_name: adminer
 #    build:
-#      context: bonus/adminer/
+#      context: requirements/bonus/adminer/
 #      dockerfile: Dockerfile
 #    volumes:
 #    ports:
@@ -84,7 +84,7 @@ services:
 #    image: adminer
 #    container_name: adminer
 #    build:
-#      context: bonus/adminer/
+#      context: requirements/bonus/adminer/
 #      dockerfile: Dockerfile
 #    volumes:
 #    ports:
@@ -98,7 +98,7 @@ services:
 #    image: portainer
 #    container_name: portainer
 #    build:
-#      context: bonus/portainer/
+#      context: requirements/bonus/portainer/
 #      dockerfile: Dockerfile
 #    ports:
 #      - "9000:9001"
