@@ -1,19 +1,20 @@
-FROM debian:bullseye
+FROM	debian:bullseye
 
 RUN 	apt-get update -y && \
-	apt-get upgrade -y && \
-	apt-get install -y nginx \
-	openssl \
-	vim \
-	curl && \
-	apt-get clean
+		apt-get upgrade -y && \
+		apt-get install -y nginx \
+		openssl \
+		vim \
+		curl && \
+		apt-get clean
 
 # creating ssl contract and its location + autosigning it
-RUN		mkdir -p /etc/nginx/ssl
-RUN		openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=znogueir.42.fr/UID=znogueir@student.42.fr"
+RUN		mkdir -p /etc/nginx/ssl/
+RUN		openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout \
+		/etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=znogueir.42.fr/UID=znogueir@student.42.fr"
 
 # creating run/nginx/file
-RUN		mkdir -p /var/run/nginx
+RUN		mkdir -p /var/run/nginx/
 
 # giving perms to www/html/
 RUN 	chmod 755 /var/www/html/ && \
@@ -24,4 +25,4 @@ COPY 	./conf/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE	443
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD		["nginx", "-g", "daemon off;"]

@@ -6,17 +6,7 @@ echo -e "\e[1m============= ENTERING DIR =============\e[0m"
 echo "cd /var/www/html/wordpress"
 cd /var/www/html/wordpress
 
-echo -e "\e[1m=========== TESTING ENV VARS ===========\e[0m" 
-echo SQL_DATABASE=${SQL_DATABASE} SQL_USER=${SQL_USER}
-
 echo -e "\e[1m============== PINGING DB ==============\e[0m"
-echo ${SQL_HOST}
-
-#mysql ping -h mariadb -u${SQL_USER} -p${SQL_PASSWORD}i > /dev/null 2>&1
-#until mysqladmin ping --host=localhost -p${SQL_ROOT_PASSWORD}; do
-#	echo "Waiting for MariaDB to start..."
-#	sleep 1
-#done
 
 #while ! mysqladmin ping --silent; do
 #	echo "Waiting for MariaDB to start..."
@@ -61,17 +51,11 @@ echo -e "\e[1m============ SETUP LANGUAGE ============\e[0m"
 echo -e "\e[1m======== DELETE USELESS PLUGINS ========\e[0m"
 	wp theme delete twentytwenty twentynineteen --allow-root
 	wp plugin delete hello --allow-root
-
-echo -e "\e[1m======== INSTALL CLASSIC EDITOR ========\e[0m"
-	wp plugin install classic-editor --allow-root --activate
-
-# echo -e "\e[1m=========== REWRITE STRUCT =============\e[0m"
-#	wp rewrite structure '/%postname%/' --allow-root
 fi
 
 echo -e "\e[1m======== CHECKING FOR /run/php/ ========\e[0m"
 if [ ! -d /run/php ]; then
-	mkdir /run/php;
+	mkdir /run/php/;
 	echo -e "\e[1mDir '/run/php/' created \e[38;5;34msuccesfully\e[0m."
 fi
 
