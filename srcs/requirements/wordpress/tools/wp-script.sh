@@ -71,10 +71,10 @@ chown -R www-data:www-data wp-includes
 chown -R www-data:www-data wp-content
 chown -R www-data:www-data wp-admin
 chown -R www-data:www-data wp-config.php
-chown -R www-data:www-data static/*
 
-mkdir -p /var/www/html/wordpress/static/
+#mkdir -p /var/www/html/wordpress/static/
 cp -r /etc/static/ /var/www/html/wordpress/
+chown -R www-data:www-data static/*
 
 echo -e "\e[1m=============== EXEC PHP ==============\e[0m"
 exec /usr/sbin/php-fpm7.4 -F

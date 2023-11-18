@@ -72,12 +72,15 @@ services:
     build:
       context: requirements/bonus/adminer/
       dockerfile: Dockerfile
-    #volumes:
+    # volumes:
     ports:
       - "8080:8080"
     networks:
       - inception
     restart: unless-stopped
+
+# Testing with official image
+
 
 # FTP Server  
 #  adminer:
