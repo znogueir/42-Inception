@@ -72,42 +72,47 @@ services:
     build:
       context: requirements/bonus/adminer/
       dockerfile: Dockerfile
-    # volumes:
-    ports:
-      - "8080:8080"
     networks:
       - inception
     restart: unless-stopped
-
-# Testing with official image
-
+    depends_on :
+      - wordpress
 
 # FTP Server  
-#  adminer:
-#    image: adminer
-#    container_name: adminer
-#    build:
-#      context: requirements/bonus/adminer/
-#      dockerfile: Dockerfile
-#    volumes:
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - inception
-#    restart: unless-stopped
+  vs-ftp-d:
+    image: vs-ftp-d
+    container_name: vs-ftp-d
+    build:
+      context: requirements/bonus/vsFTPd/
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress-data:/var/www/html/wordpress/
+    env_file: 
+      - .env
+    ports:
+      - "2121:2121"
+      - "21000-21010:21000-21010"
+    networks:
+      - inception
+    restart: unless-stopped
+    depends_on:
+      - wordpress
 
 # Additional service : Portainer
-#  portainer:
-#    image: portainer
-#    container_name: portainer
-#    build:
-#      context: requirements/bonus/portainer/
-#      dockerfile: Dockerfile
-#    ports:
-#      - "9000:9001"
-#    networks:
-#      - inception
-#    restart: unless-stopped
+  portainer:
+    image: portainer
+    container_name: portainer
+    build:
+      context: requirements/bonus/portainer/
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    ports:
+      - "9001:9000"
+    networks:
+      - inception
+    restart: unless-stopped
 
 # ========================================================== #
 
@@ -129,3 +134,6 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/znogueir/data/mariadb'
+# BONUSES
+  portainer-data:
+    driver: local
