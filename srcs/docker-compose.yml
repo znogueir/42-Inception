@@ -126,6 +126,8 @@ services:
     networks:
       - inception
     restart: unless-stopped
+    depends_on:
+      - wordpress
 
 # ========================================================== #
 

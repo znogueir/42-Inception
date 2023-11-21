@@ -53,22 +53,21 @@ echo -e "\e[1m======== DELETE USELESS PLUGINS ========\e[0m"
 	wp plugin delete hello --allow-root
 
 echo -e "\e[1m\e[38;5;34m** BONUS : INSTALL REDIS-OBJECT-CACHE **\e[0m"
-	#REDIS_CONFIG_LINES=$(cat <<EOL
-#define('WP_REDIS_HOST', 'redis');
-#define('WP_REDIS_PORT', '6379');
-#define('WP_CACHE_KEY_SALT', '${DOMAIN_NAME}');
-#EOL
-#)
-	#sed -i "/\/* Add any custom values between this line and the "stop editing" line. *\//a $REDIS_CONFIG_LINES" /var/www/html/wordpress/wp-config.php
-	sed -i 's/wp_cache_add/wp_cache_add2/g' /var/www/html/wordpress/wp-includes/cache.php
-	#cp -r /var/www/html/wordpress/wp-content/plugins/redis-object-cache/object-cache.php /var/www/html/wordpress/wp-includes/cache.php
 	wp config set WP_REDIS_HOST "redis" --allow-root
 	wp config set WP_REDIS_PORT "6379" --allow-root
 	wp config set WP_CACHE_KEY_SALT "znogueir.42.fr" --allow-root
+	wp config set WP_DEBUG "true" --allow-root
+	wp config set WP_DEBUG_LOG "true" --allow-root
+	wp config set WP_DEBUG_DISPLAY "false" --allow-root
+	wp config set WP_REDIS_TCP_NODELAY, "false" --allow-root
 	#wp config set WP_CACHE_KEY_SALT "${DOMAIN_NAME}"
-	wp config set WP_REDIS_DATABASE "0" --allow-root
-	#cp -r /var/www/html/wordpress/wp-content/plugins/redis-object-cache/object-cache.php /var/www/html/wordpress/wp-content/
-	wp plugin install redis-object-cache --allow-root --activate
+	#wp config set WP_REDIS_DATABASE "0" --allow-root
+	wp plugin install redis-object-cache --allow-root
+echo -e "\e[1m**** BONUS : COPYING REDIS CACHE.PHP ****\e[0m"
+	cp -r ./wp-content/plugins/redis-object-cache/* ./wp-content/
+echo -e "\e[1m******* BONUS : ACTIVATING REDIS ********\e[0m"
+	#wp plugin activate redis-object-cache --allow-root
+
 fi
 
 echo -e "\e[1m======== CHECKING FOR /run/php/ ========\e[0m"
@@ -96,9 +95,9 @@ chown -R www-data:www-data static/*
 
 # ======================== BONUS : REDIS ======================== #
 
-echo "define('WP_REDIS_HOST', 'redis');" >> /var/www/html/wordpress/wp-config.php
-echo "define('WP_REDIS_PORT', '6379');" >> /var/www/html/wordpress/wp-config.php
-echo "define('WP_CACHE_KEY_SALT', '${DOMAIN_NAME}');" >> /var/www/html/wordpress/wp-config.php
+#echo "define('WP_REDIS_HOST', 'redis');" >> /var/www/html/wordpress/wp-config.php
+#echo "define('WP_REDIS_PORT', '6379');" >> /var/www/html/wordpress/wp-config.php
+#echo "define('WP_CACHE_KEY_SALT', '${DOMAIN_NAME}');" >> /var/www/html/wordpress/wp-config.php
 
 # =============================================================== #
 

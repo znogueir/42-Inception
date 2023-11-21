@@ -11,4 +11,4 @@ RUN apt-get update && apt-get upgrade -y && \
 EXPOSE 6379
 
 # Command to run when the container starts
-CMD ["redis-server"]
+CMD ["redis-server", "--protected-mode", "no"]
