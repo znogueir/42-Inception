@@ -52,21 +52,20 @@ echo -e "\e[1m======== DELETE USELESS PLUGINS ========\e[0m"
 	wp theme delete twentytwenty twentynineteen --allow-root
 	wp plugin delete hello --allow-root
 
-echo -e "\e[1m\e[38;5;34m** BONUS : INSTALL REDIS-OBJECT-CACHE **\e[0m"
+# =============== BONUS : Redis config + installation =============== #
+echo -e "\e[1m\e[38;5;34m**************** BONUS *****************\e[0m"
+echo -e "\e[1m********* CONFIGURE REDIS ENV **********\e[0m"
 	wp config set WP_REDIS_HOST "redis" --allow-root
 	wp config set WP_REDIS_PORT "6379" --allow-root
-	wp config set WP_CACHE_KEY_SALT "znogueir.42.fr" --allow-root
-	wp config set WP_DEBUG "true" --allow-root
-	wp config set WP_DEBUG_LOG "true" --allow-root
-	wp config set WP_DEBUG_DISPLAY "false" --allow-root
-	wp config set WP_REDIS_TCP_NODELAY, "false" --allow-root
-	#wp config set WP_CACHE_KEY_SALT "${DOMAIN_NAME}"
-	#wp config set WP_REDIS_DATABASE "0" --allow-root
-	wp plugin install redis-object-cache --allow-root
-echo -e "\e[1m**** BONUS : COPYING REDIS CACHE.PHP ****\e[0m"
-	cp -r ./wp-content/plugins/redis-object-cache/* ./wp-content/
-echo -e "\e[1m******* BONUS : ACTIVATING REDIS ********\e[0m"
-	#wp plugin activate redis-object-cache --allow-root
+	wp config set WP_CACHE_KEY_SALT ${DOMAIN_NAME} --allow-root
+	wp config set WP_REDIS_DATABASE "0" --allow-root
+
+echo -e "\e[1m********* INSTALL REDIS PLUGIN *********\e[0m"
+	wp plugin install redis-cache --allow-root --activate
+	wp redis enable --allow-root
+
+echo -e "\e[1m\e[38;5;34m************** BONUS DONE **************\e[0m"
+# =================================================================== #
 
 fi
 
@@ -79,27 +78,18 @@ fi
 echo -e "\e[38;5;34m############### FINISHED ###############\e[0m"
 
 cd /var/www/html/wordpress/
-chmod 777 -R wp-content
-chmod 777 -R wp-config.php
-chmod 777 -R wp-includes
-chmod 777 -R wp-admin
+chmod 755 -R wp-content
+chmod 755 -R wp-config.php
+chmod 755 -R wp-includes
+chmod 755 -R wp-admin
 
 chown -R www-data:www-data wp-includes
 chown -R www-data:www-data wp-content
 chown -R www-data:www-data wp-admin
 chown -R www-data:www-data wp-config.php
 
-#mkdir -p /var/www/html/wordpress/static/
 cp -r /etc/static/ /var/www/html/wordpress/
 chown -R www-data:www-data static/*
 
-# ======================== BONUS : REDIS ======================== #
-
-#echo "define('WP_REDIS_HOST', 'redis');" >> /var/www/html/wordpress/wp-config.php
-#echo "define('WP_REDIS_PORT', '6379');" >> /var/www/html/wordpress/wp-config.php
-#echo "define('WP_CACHE_KEY_SALT', '${DOMAIN_NAME}');" >> /var/www/html/wordpress/wp-config.php
-
-# =============================================================== #
-
-echo -e "\e[1m=============== EXEC PHP ==============\e[0m"
+echo -e "\e[1m=============== EXEC PHP ===============\e[0m"
 exec /usr/sbin/php-fpm7.4 -F

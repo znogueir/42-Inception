@@ -6,7 +6,6 @@ RUN		apt-get update -y && \
 		php \
 		php-fpm \
 		php-mysql \
-		vim \
 		mariadb-client && \
 		apt-get clean
 
@@ -40,7 +39,6 @@ RUN		chmod +x /etc/wordpress/startup_script/wp-script.sh
 # copying conf file for php-fpm
 COPY	./conf/www.conf/ /etc/php/7.3/fpm/pool.d/www.conf
 COPY	./conf/www.conf/ /etc/php/7.4/fpm/pool.d/www.conf
-#COPY	./conf/object-cache.php /etc/object-cache.php
 
 # adding options to the php.ini file
 RUN		echo "clear_env=no" >> /etc/php/7.4/fpm/php.ini && \
