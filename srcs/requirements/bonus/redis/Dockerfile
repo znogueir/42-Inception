@@ -1,14 +1,12 @@
-# Use the Debian Bullseye base image
 FROM debian:bullseye
 
-# Install necessary packages
+# installing redis-server
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
     redis-server \
     && rm -rf /var/lib/apt/lists/*
 
-# Expose the default Redis port
 EXPOSE 6379
 
-# Command to run when the container starts
+# launching redis without protected mode wo we can connect to it with no perm
 CMD ["redis-server", "--protected-mode", "no"]

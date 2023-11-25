@@ -1,5 +1,6 @@
 FROM	debian:bullseye
 
+# installing php + utils & mariadb-client
 RUN		apt-get update -y && \
 		apt-get upgrade -y && \
 		apt-get install -y wget \
@@ -44,9 +45,7 @@ COPY	./conf/www.conf/ /etc/php/7.4/fpm/pool.d/www.conf
 RUN		echo "clear_env=no" >> /etc/php/7.4/fpm/php.ini && \
 		echo "listen=wordpress:9000" >> /etc/php/7.4/fpm/php.ini
 
-# copying static website
-COPY	./static/ /etc/static/
-
 EXPOSE	9000
 
+# executing script
 CMD		["bash", "/etc/wordpress/startup_script/wp-script.sh"]

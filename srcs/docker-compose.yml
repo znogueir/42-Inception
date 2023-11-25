@@ -50,6 +50,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress-data:/var/www/html/wordpress/
+      - ./requirements/bonus/static/:/var/www/html/static/
     ports:
       - "443:443"
     networks:
@@ -57,12 +58,6 @@ services:
     restart: unless-stopped
     depends_on:
       - wordpress
-    healthcheck:
-      test: ["CMD", "curl", "kfsSL", "https://localhost:443"]
-      interval: 5s
-      timeout: 1s
-      retries: 20
-      start_period: 5s
 
 # ======================== BONUSES ========================= #
 # Adminer

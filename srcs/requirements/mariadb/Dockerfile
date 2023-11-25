@@ -1,11 +1,12 @@
 FROM	debian:bullseye
 
+# installing mariadb + utils
 RUN		apt-get update -y && \
 		apt-get upgrade -y && \
 		apt-get install -y mariadb-server \
 		mariadb-client \
-		vim && \
-		apt-get clean
+		# vim \
+		&& apt-get clean
 
 # env variables for individual testing (without docker compose)
 #ENV SQL_DATABASE=db_inception
@@ -32,4 +33,5 @@ COPY	./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE	3306
 
+# executing script
 ENTRYPOINT ["bash", "/etc/mariadb/startup_script/mariadb-script.sh"]

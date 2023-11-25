@@ -1,10 +1,11 @@
 FROM	debian:bullseye
 
+# installing nginx + utils
 RUN 	apt-get update -y && \
 		apt-get upgrade -y && \
 		apt-get install -y nginx \
 		openssl \
-		vim \
+		# vim \
 		curl && \
 		apt-get clean
 

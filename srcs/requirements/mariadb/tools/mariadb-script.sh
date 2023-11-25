@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Start MariaDB in the background to perform setup
+# starting MariaDB in the background to perform setup
 mysqld_safe &
 pid="$!"
 
-# Use the mysqladmin utility to wait for server to finish starting
+# using the mysqladmin utility to wait for server to finish starting
 while ! mysqladmin ping --silent; do
     echo "Waiting for MariaDB to start..."
     sleep 2
 done
 
-# Database and user setup
+# database and user setup
 mysql -uroot <<-EOSQL && echo -e "mariadb queries [\033[32mOK\033[0m]"
     CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;
     CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';
@@ -20,11 +20,11 @@ mysql -uroot <<-EOSQL && echo -e "mariadb queries [\033[32mOK\033[0m]"
     FLUSH PRIVILEGES;
 EOSQL
 
-# Clean stop MariaDB (avoid using tail -f, sleep)
+# clean stop MariaDB (avoid using tail -f, sleep)
 mysqladmin -uroot -p${SQL_ROOT_PASSWORD} shutdown
 
-# Wait for MariaDB to finish shutting down
+# waiting for MariaDB to finish shutting down
 wait "$pid"
 
-# Start MariaDB in the foreground
+# starting MariaDB in the foreground
 exec mysqld_safe
