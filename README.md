@@ -10,8 +10,8 @@ Goal(s) :
 
 Features :
 - fully functional wordpress interface, image uploading, page modification, moderation, etc.
-- multiple domain names handling, redirecting to the static website, or wordpress, or adminer
-- https forced
+- multiple domain names handling, redirecting to the static website / wordpress / adminer
+- https enforced
 - resilient data with docker volumes
 - adminer setup for mariadb (bonus)
 - redis cache for wordpress (bonus)
